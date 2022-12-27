@@ -10,11 +10,14 @@ public class RoomSpawner : MonoBehaviour
     private int rand;
     private bool spawned = false;
 
+
     void Start()
     {
         templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         Invoke("Spawn", 0.1f);
     }
+
+   
 
     void Spawn()
     {
@@ -24,25 +27,57 @@ public class RoomSpawner : MonoBehaviour
             {
                 //Need Bottom door
                 rand = Random.Range(0, templates.bottomRooms.Length);
-                Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                GameObject bottomRoom = (GameObject)Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                foreach (Transform child in bottomRoom.transform)
+                {
+                    if (child.name == "BottomDoor")
+                    {
+                        GameObject.Destroy(child.gameObject);
+                        return;
+                    }
+                }
             }
             else if (doorSide == 2)
             {
                 //Need Top door
                 rand = Random.Range(0, templates.topRooms.Length);
-                Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                GameObject topRoom = (GameObject)Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                foreach (Transform child in topRoom.transform)
+                {
+                    if (child.name == "TopDoor")
+                    {
+                        GameObject.Destroy(child.gameObject);
+                        return;
+                    }
+                }
             }
             else if (doorSide == 3)
             {
                 //Need Right door
                 rand = Random.Range(0, templates.rightRooms.Length);
-                Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
+                GameObject rightRoom = (GameObject)Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
+                foreach (Transform child in rightRoom.transform)
+                {
+                    if (child.name == "RightDoor")
+                    {
+                        GameObject.Destroy(child.gameObject);
+                        return;
+                    }
+                }
             }
             else if (doorSide == 4)
             {
                 //Need Left door
                 rand = Random.Range(0, templates.leftRooms.Length);
-                Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                GameObject leftRoom = (GameObject)Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                foreach (Transform child in leftRoom.transform)
+                {
+                    if (child.name == "LeftDoor")
+                    {
+                        GameObject.Destroy(child.gameObject);
+                        return;
+                    }
+                }
             }
             spawned = true;
         }
