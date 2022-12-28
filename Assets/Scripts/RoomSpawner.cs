@@ -10,14 +10,11 @@ public class RoomSpawner : MonoBehaviour
     private int rand;
     private bool spawned = false;
 
-
     void Start()
     {
         templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         Invoke("Spawn", 0.1f);
     }
-
-   
 
     void Spawn()
     {
@@ -28,6 +25,7 @@ public class RoomSpawner : MonoBehaviour
                 //Need Bottom door
                 rand = Random.Range(0, templates.bottomRooms.Length);
                 GameObject bottomRoom = (GameObject)Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                templates.instantiatedRooms.Add(bottomRoom);
                 foreach (Transform child in bottomRoom.transform)
                 {
                     if (child.name == "BottomDoor")
@@ -42,6 +40,7 @@ public class RoomSpawner : MonoBehaviour
                 //Need Top door
                 rand = Random.Range(0, templates.topRooms.Length);
                 GameObject topRoom = (GameObject)Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                templates.instantiatedRooms.Add(topRoom);
                 foreach (Transform child in topRoom.transform)
                 {
                     if (child.name == "TopDoor")
@@ -56,6 +55,7 @@ public class RoomSpawner : MonoBehaviour
                 //Need Right door
                 rand = Random.Range(0, templates.rightRooms.Length);
                 GameObject rightRoom = (GameObject)Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
+                templates.instantiatedRooms.Add(rightRoom);
                 foreach (Transform child in rightRoom.transform)
                 {
                     if (child.name == "RightDoor")
@@ -70,6 +70,7 @@ public class RoomSpawner : MonoBehaviour
                 //Need Left door
                 rand = Random.Range(0, templates.leftRooms.Length);
                 GameObject leftRoom = (GameObject)Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                templates.instantiatedRooms.Add(leftRoom);
                 foreach (Transform child in leftRoom.transform)
                 {
                     if (child.name == "LeftDoor")

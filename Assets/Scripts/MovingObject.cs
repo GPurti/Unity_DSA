@@ -19,7 +19,7 @@ public abstract class MovingObject : MonoBehaviour
         inverseMoveTime = 1f / moveTime;
     }
 
-    protected bool Move (int xDir, int yDir, out RaycastHit2D hit)
+    protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
@@ -36,11 +36,11 @@ public abstract class MovingObject : MonoBehaviour
         return false;
     }
 
-    protected IEnumerator SmoothMovement (Vector3 end)
+    protected IEnumerator SmoothMovement(Vector3 end)
     {
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
-        while(sqrRemainingDistance > float.Epsilon)
+        while (sqrRemainingDistance > float.Epsilon)
         {
             Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime * Time.deltaTime);
             rb2D.MovePosition(newPosition);
@@ -49,18 +49,29 @@ public abstract class MovingObject : MonoBehaviour
         }
     }
 
-    protected virtual void AttemptMove <T> (int xDir, int yDir)
+    //The virtual keyword means AttemptMove can be overridden by inheriting classes using the override keyword.
+    //AttemptMove takes a generic parameter T to specify the type of component we expect our unit to interact with if blocked (Player for Enemies, Wall for Player).
+    protected virtual void AttemptMove<T>(int xDir, int yDir)
         where T : Component
     {
+        //Hit will store whatever our linecast hits when Move is called.
         RaycastHit2D hit;
+
+        //Set canMove to true if Move was successful, false if failed.
         bool canMove = Move(xDir, yDir, out hit);
 
+        //Check if nothing was hit by linecast
         if (hit.transform == null)
+            //If nothing was hit, return and don't execute further code.
             return;
 
+        //Get a component reference to the component of type T attached to the object that was hit
         T hitComponent = hit.transform.GetComponent<T>();
 
+        //If canMove is false and hitComponent is not equal to null, meaning MovingObject is blocked and has hit something it can interact with.
         if (!canMove && hitComponent != null)
+
+            //Call the OnCantMove function and pass it hitComponent as a parameter.
             OnCantMove(hitComponent);
     }
 
