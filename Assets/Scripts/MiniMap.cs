@@ -20,7 +20,9 @@ public class MiniMap : MonoBehaviour
 
     void Start()
     {
+        
         Invoke("DrawMiniMap", 2);
+        
     }
 
 
@@ -70,8 +72,12 @@ public class MiniMap : MonoBehaviour
 
             DrawRoom(room.transform.position / 10);
         }
-        transform.localScale = new Vector3(4, 4, 0);
-        transform.position = new Vector3(7, -3, 0);
+        transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>().transform);
+        transform.localScale = new Vector3(200, 200, 0);
+        gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
+        gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-130, 130, 1);
+
     }
 
     private void DrawRoom(Vector3 roomPosition)
