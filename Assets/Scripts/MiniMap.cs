@@ -7,8 +7,10 @@ public class MiniMap : MonoBehaviour
 {
     public List<GameObject> rooms;
     private List<GameObject> circles;
+    private List<GameObject> completedRooms;
     public GameObject square;
     public GameObject circle;
+    public GameObject completed;
     private float height;
     private float width;
 
@@ -16,6 +18,7 @@ public class MiniMap : MonoBehaviour
     void Awake()
     {
         circles = new List<GameObject>();
+        completedRooms = new List<GameObject>();
         DontDestroyOnLoad(gameObject);
         rooms = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().instantiatedRooms;
     }
@@ -67,8 +70,14 @@ public class MiniMap : MonoBehaviour
             GameObject circle1 = (GameObject)Instantiate(circle, new Vector3(rooms[i].transform.position.x / 10, rooms[i].transform.position.y / 10, 1), circle.transform.rotation);
             circle1.transform.SetParent(transform);
             circles.Insert(i, circle1);
-            if(rooms[i].tag != "CentralRoom")
-                circle1.SetActive(false); 
+            if(rooms[i].tag != "CentralRoom") 
+                circle1.SetActive(false);
+
+            GameObject completed1 = (GameObject)Instantiate(completed, new Vector3(rooms[i].transform.position.x / 10, rooms[i].transform.position.y / 10, 1), completed.transform.rotation);
+            completed1.transform.SetParent(transform);
+            completedRooms.Insert(i, completed1);
+            completed1.SetActive(false);
+
             DrawRoom(rooms[i].transform.position / 10);
         }
 
@@ -108,7 +117,12 @@ public class MiniMap : MonoBehaviour
                     if (a == i)
                         circles[a].SetActive(true);
                     else
+                    {
+                        if (circles[a].activeSelf)
+                            completedRooms[a].SetActive(true);
                         circles[a].SetActive(false);
+                    }
+                        
                 }
             }
         }

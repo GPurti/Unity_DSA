@@ -26,8 +26,8 @@ public class Door : MonoBehaviour
             }
             if (this.transform.name == "TopDoor")
             {
-                GameObject wall1 = (GameObject)Instantiate(findSquare());
-                GameObject wall2 = (GameObject)Instantiate(findSquare());
+                GameObject wall1 = (GameObject)Instantiate(findSquareTop());
+                GameObject wall2 = (GameObject)Instantiate(findSquareTop());
                 wall1.transform.SetParent(findWalls().transform);
                 wall2.transform.SetParent(findWalls().transform);
                 wall1.transform.position = new Vector2(this.transform.parent.position.x + (float)-0.5, this.transform.parent.position.y + (float)4.5);
@@ -78,6 +78,22 @@ public class Door : MonoBehaviour
             if (child.name == "Walls")
             {
                 return child.gameObject;
+            }
+        }
+        return null;
+    }
+
+    private GameObject findSquareTop()
+    {
+        foreach (Transform child in this.transform.parent)
+        {
+            if (child.name == "Walls")
+            {
+                foreach (Transform child1 in child)
+                {
+                    if (child1.name == "SquareTop")
+                        return child1.gameObject;
+                }
             }
         }
         return null;
