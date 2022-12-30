@@ -11,7 +11,7 @@ public class RoomGameManager : MonoBehaviour
     public float turnDelay = 0.1f;                            //Delay between each Player turn.
     public int playerCoinPoints = 0;                        //Starting value for Player coin points.
     public List<string> elementsAvailable = new List<string>();
-
+    [HideInInspector] public bool initiated = false;
 
     [HideInInspector] public bool playersTurn = true;        //Boolean to check if it's players turn, hidden in inspector but public.
 
@@ -34,6 +34,7 @@ public class RoomGameManager : MonoBehaviour
     //Initializes the game for each level.
     public void InitGame()
     {
+        initiated = true;
         //Call the SetupScene function of the BoardManager script, pass it current level number.
         roomBoardManager.SetupScene(level);
         

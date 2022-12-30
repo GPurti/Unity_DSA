@@ -6,6 +6,7 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour
 {
     public List<GameObject> rooms;
+    private List<GameObject> circles;
     public GameObject square;
     public GameObject circle;
     private float height;
@@ -14,15 +15,14 @@ public class MiniMap : MonoBehaviour
 
     void Awake()
     {
+        circles = new List<GameObject>();
         DontDestroyOnLoad(gameObject);
         rooms = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().instantiatedRooms;
     }
 
     void Start()
     {
-        
-        Invoke("DrawMiniMap", 2);
-        
+        Invoke("DrawMiniMap", 1);
     }
 
 
@@ -62,22 +62,21 @@ public class MiniMap : MonoBehaviour
             height = width;
         transform.localScale = new Vector3(width, height, 0);
 
-        foreach (GameObject room in rooms)
+        for(int i = 0; i < rooms.Count; i++)
         {
-            if (room.tag == "CentralRoom")
-            {
-                GameObject circle1 = (GameObject)Instantiate(circle, new Vector3(0, 0, 1), circle.transform.rotation);
-                circle1.transform.SetParent(transform);
-            }
-
-            DrawRoom(room.transform.position / 10);
+            GameObject circle1 = (GameObject)Instantiate(circle, new Vector3(rooms[i].transform.position.x / 10, rooms[i].transform.position.y / 10, 1), circle.transform.rotation);
+            circle1.transform.SetParent(transform);
+            circles.Insert(i, circle1);
+            if(rooms[i].tag != "CentralRoom")
+                circle1.SetActive(false); 
+            DrawRoom(rooms[i].transform.position / 10);
         }
+
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>().transform);
         transform.localScale = new Vector3(200, 200, 0);
         gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
         gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
         gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-130, 130, 1);
-
     }
 
     private void DrawRoom(Vector3 roomPosition)
@@ -98,6 +97,20 @@ public class MiniMap : MonoBehaviour
         }
     }
 
-
-
+    public void UpdateMap(GameObject room)
+    {
+        for(int i = 0; i < rooms.Count; i++)
+        {
+            if (rooms[i].GetInstanceID() == room.GetInstanceID() || (rooms[i].tag == "CentralRoom" && room.tag == "CentralRoom"))
+            {
+                for(int a = 0; a < circles.Count; a++)
+                {
+                    if (a == i)
+                        circles[a].SetActive(true);
+                    else
+                        circles[a].SetActive(false);
+                }
+            }
+        }
+    }
 }

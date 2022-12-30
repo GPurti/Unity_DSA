@@ -6,7 +6,7 @@ public class Destruction : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" || other.tag == "Enemy")
+        if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "Room")
             return;
         Destroy(other.gameObject);
     }
