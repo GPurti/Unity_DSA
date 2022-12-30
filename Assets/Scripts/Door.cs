@@ -11,6 +11,12 @@ public class Door : MonoBehaviour
         Invoke("WallUpDoors", 2);
     }
 
+    public void OpenDoor(GameObject player)
+    {
+        player.GetComponent<Player>().canOpenDoor = false;
+        Destroy(this.gameObject);
+    }
+
     private void WallUpDoors()
     {
         if(neighbor == false)

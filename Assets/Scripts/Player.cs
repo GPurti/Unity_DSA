@@ -7,7 +7,7 @@ public class Player : MovingObject
 {
 	public float restartLevelDelay = 1f;        //Delay time in seconds to restart level.
 	
-	public int pointsPerCoin = 20;
+	public int pointsPerCoin = 5;
 	
 	//public Text coinText;
 	//public Text hpText;
@@ -18,6 +18,7 @@ public class Player : MovingObject
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	private int coins;
 	private int hp=10;
+	[HideInInspector] public bool canOpenDoor = false;
 
 	[HideInInspector] public RoomGameManager roomGameManager;
 
@@ -25,22 +26,14 @@ public class Player : MovingObject
 	protected override void Start()
 	{
 
-		//Get a component reference to the Player's animator component
 		animator = GetComponent<Animator>();
 
-		//Get the current food point total stored in GameManager.instance between levels.
-		Invoke("hello", 2);
-		
+		Invoke("SetCoins", 1);
 
-		//Set the foodText to reflect the current player food total.
-
-		//coinText.text = "Money: " + coins;
-
-		//Call the Start function of the MovingObject base class.
 		base.Start();
 	}
 
-	private void hello()
+	private void SetCoins()
     {
 		coins = roomGameManager.playerCoinPoints;
 	}
@@ -80,13 +73,15 @@ public class Player : MovingObject
 		{
 			//Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
 			//Pass in horizontal and vertical as parameters to specify the direction to move Player in.
-			AttemptMove<Totem>(horizontal, vertical);
+			AttemptMove<Door>(horizontal, vertical);
+			AttemptMove<Enemy>(horizontal, vertical);
 		}
 	}
 
 	//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		//NOT BEING USED YET
 		//Check if the tag of the trigger collided with is Exit.
 		if (other.tag == "Exit")
 		{
@@ -97,6 +92,7 @@ public class Player : MovingObject
 			enabled = false;
 		}
 
+		//NOT BEING USED YET
 		//Check if the tag of the trigger collided with is Food.
 		else if (other.tag == "ElementFire")
 		{
@@ -108,6 +104,7 @@ public class Player : MovingObject
 
 			//s'haurien de desactivar els altres
 		}
+
 		else if (other.tag == "Coin")
 		{
 			//Add pointsPerFood to the players current food total.
@@ -132,14 +129,12 @@ public class Player : MovingObject
 		//Hit allows us to reference the result of the Linecast done in Move.
 		RaycastHit2D hit;
 
-		//If Move returns true, meaning Player was able to move into an empty space.
-		if (Move(xDir, yDir, out hit))
-		{
+		if(Move(xDir, yDir, out hit))
+        {
 
-		}
+        }
 
-		//Set the playersTurn boolean of GameManager to false now that players turn is over.
-		//roomGameManager.playersTurn = false;
+		roomGameManager.playersTurn = false;
 	}
 
 
@@ -147,34 +142,32 @@ public class Player : MovingObject
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
 	protected override void OnCantMove<T>(T component)
 	{
-		//Set hitWall to equal the component passed in as a parameter.
-		Totem hitTotem = component as Totem;
-
-		//Call the DamageWall function of the Wall we are hitting.
-		hitTotem.ChoseElement();
-
+		if (component.tag == "Door")
+        {
+			Door openDoor = component as Door;
+			if(canOpenDoor)
+				openDoor.OpenDoor(this.gameObject);
+		}
+		if (component.tag == "Enemy")
+		{
+			Enemy enemyToAttack = component as Enemy;
+			enemyToAttack.damagedByPlayer();
+		}
+		animator.SetTrigger("playerAct");
 		//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
-		animator.SetTrigger("playerChop");
-	}
 
-
-	//Restart reloads the scene when called.
-	private void Restart()
-	{
-		//Load the last scene loaded, in this case Main, the only scene in the game.
-		SceneManager.LoadScene(0);
 	}
 
 
 	//LoseFood is called when an enemy attacks the player.
 	//It takes a parameter loss which specifies how many points to lose.
-	public void LoseFood(int loss)
+	public void LoseCoins(int loss)
 	{
 		//Set the trigger for the player animator to transition to the playerHit animation.
 		animator.SetTrigger("playerHit");
 
 		//Subtract lost food points from the players total.
-		hp -= loss;
+		coins -= loss;
 
 		//Update the food display with the new total.
 		//hpText.text = "-" + loss + " HP: " + hp;
@@ -188,10 +181,8 @@ public class Player : MovingObject
 	private void CheckIfGameOver()
 	{
 		//Check if food point total is less than or equal to zero.
-		if (hp <= 0)
+		if (coins <= 0)
 		{
-
-
 			//Call the GameOver function of GameManager.
 			roomGameManager.GameOver();
 		}

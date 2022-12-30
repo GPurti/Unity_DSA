@@ -24,8 +24,8 @@ public class RoomBoardManager : MonoBehaviour
 
     public int columns = 8;                                         //Number of columns in our room
     public int rows = 8;                                            //Number of rows in our room
-    public Count foodCount = new Count(1, 5);                        //Lower and upper limit for our random number of food items per level.
-    public GameObject[] foodTiles;                                    //Array of food prefabs.
+    public Count coinCount = new Count(1, 5);                        //Lower and upper limit for our random number of food items per level.
+    public GameObject[] coin;                                    //Array of food prefabs.
     public GameObject[] enemyTiles;                                    //Array of enemy prefabs.
     public GameObject[] players;
 
@@ -87,7 +87,7 @@ public class RoomBoardManager : MonoBehaviour
         InitialiseList();
 
         //Instantiate a random number of food tiles based on minimum and maximum, at randomized positions.
-        LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
+        LayoutObjectAtRandom(coin, coinCount.minimum, coinCount.maximum);
 
         //Determine number of enemies based on current level number, based on a logarithmic progression
         int enemyCount = (int)Mathf.Log(level, 2f);

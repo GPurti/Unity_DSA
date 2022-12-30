@@ -127,4 +127,21 @@ public class MiniMap : MonoBehaviour
             }
         }
     }
+
+    public void GameOver()
+    {
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (rooms[i].tag == "CentralRoom")
+            {
+                foreach (Transform child in rooms[i].transform)
+                {
+                    if (child.name == "GameOver")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
 }

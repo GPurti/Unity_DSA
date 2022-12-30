@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnterRoomScript : MonoBehaviour
 {
-    float lerpDuration = (float)0.5;
+    float lerpDuration = (float)0.2;
     Vector3 endValue;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -29,6 +29,10 @@ public class EnterRoomScript : MonoBehaviour
             endValue = new Vector3(this.transform.parent.position.x, this.transform.parent.position.y, -10);
             Component camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Component>();
             StartCoroutine(updateCamera(camera));
+        }
+        if(other.tag == "Enemy")
+        {
+            other.GetComponent<Enemy>().roomGameManager = this.transform.parent.gameObject.GetComponent<RoomGameManager>();
         }
     }
 
