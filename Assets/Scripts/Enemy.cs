@@ -70,7 +70,7 @@ public class Enemy : MovingObject
     {
         Player hitPlayer = component as Player;
 
-        //hitPlayer.LoseCoins(playerDamage);
+        hitPlayer.LoseCoins(playerDamage);
 
         animator.SetTrigger("enemyAttack");
     }
