@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MovingObject
 {
@@ -10,14 +11,14 @@ public class Player : MovingObject
 	public int pointsPerCoin = 5;
 	
 	//public Text coinText;
-	//public Text hpText;
-	public AudioClip moveSound1;                //1 of 2 Audio clips to play when player moves.
-	public AudioClip moveSound2;                //2 of 2 Audio clips to play when player moves.
-	public AudioClip gameOverSound;             //Audio clip to play when player dies.
-
+	
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	private int coins;
-	private int hp=10;
+	public int maxHealth = 100;
+	public int currentHealth;
+
+	private HealthBar healthBar;
+
 	[HideInInspector] public bool canOpenDoor = false;
 
 	[HideInInspector] public RoomGameManager roomGameManager;
@@ -25,18 +26,20 @@ public class Player : MovingObject
 	//Start overrides the Start function of MovingObject
 	protected override void Start()
 	{
-
+		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
 		animator = GetComponent<Animator>();
-
+		currentHealth = maxHealth;
+		healthBar.SetMaxHealth(maxHealth);
 		Invoke("SetCoins", 1);
 
 		base.Start();
 	}
-
+	
 	private void SetCoins()
     {
 		coins = roomGameManager.playerCoinPoints;
 	}
+
 
 
 	//This function is called when the behaviour becomes disabled or inactive.
@@ -76,6 +79,19 @@ public class Player : MovingObject
 			AttemptMove<Door>(horizontal, vertical);
 			AttemptMove<Enemy>(horizontal, vertical);
 		}
+		Vector3 characterScale = transform.localScale;
+		if (Input.GetAxis("Horizontal") < 0)
+        {
+			characterScale.x = -3.5f;
+
+        }
+		if (Input.GetAxis("Horizontal") > 0)
+		{
+			characterScale.x = 3.5f;
+
+		}
+		transform.localScale = characterScale;
+
 	}
 
 	//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
@@ -161,16 +177,16 @@ public class Player : MovingObject
 
 	//LoseFood is called when an enemy attacks the player.
 	//It takes a parameter loss which specifies how many points to lose.
-	public void LoseCoins(int loss)
+	public void LoseHp(int loss)
 	{
 		//Set the trigger for the player animator to transition to the playerHit animation.
 		animator.SetTrigger("playerHit");
 
 		//Subtract lost food points from the players total.
-		coins -= loss;
+		currentHealth -= loss;
 
 		//Update the food display with the new total.
-		//hpText.text = "-" + loss + " HP: " + hp;
+		healthBar.SetHealth(currentHealth);
 
 		//Check to see if game has ended.
 		CheckIfGameOver();
@@ -181,8 +197,9 @@ public class Player : MovingObject
 	private void CheckIfGameOver()
 	{
 		//Check if food point total is less than or equal to zero.
-		if (coins <= 0)
+		if (currentHealth <= 0)
 		{
+			animator.SetTrigger("playerDie");
 			//Call the GameOver function of GameManager.
 			roomGameManager.GameOver();
 		}

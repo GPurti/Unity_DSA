@@ -8,4 +8,8 @@ public class Canvas : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
     }
+    void Update()
+    {
+        transform.SetAsLastSibling();
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomGameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class RoomGameManager : MonoBehaviour
     public float levelStartDelay = 2f;                        //Time to wait before starting level, in seconds.
     public float turnDelay = 0.1f;                            //Delay between each Player turn.
     public int playerCoinPoints = 100;                        //Starting value for Player coin points.
+    public int playerHealthPoints = 100;
     public List<string> elementsAvailable = new List<string>();
     [HideInInspector] public bool initiated = false;
 
@@ -18,6 +20,8 @@ public class RoomGameManager : MonoBehaviour
     private List<Enemy> enemies;
     private int enemiesNumber;
     private bool enemiesMoving;
+
+  
 
     void Awake()
     {
@@ -32,6 +36,8 @@ public class RoomGameManager : MonoBehaviour
         if (gameObject.tag == "CentralRoom")
         {
             InitGame();
+           
+
         }
     }
 

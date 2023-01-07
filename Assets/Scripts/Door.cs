@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
 
     void Start()
     {
-        Invoke("WallUpDoors", 2);
+        Invoke("WallUpDoors", 5);
     }
 
     public void OpenDoor(GameObject player)

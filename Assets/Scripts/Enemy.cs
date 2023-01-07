@@ -35,6 +35,7 @@ public class Enemy : MovingObject
         {
             roomGameManager.RemoveEnemyFromList(this.gameObject);
             roomGameManager.CheckIfGameOver();
+            animator.SetTrigger("enemyDie");
             Destroy(this.gameObject);
         }
     }
@@ -42,15 +43,15 @@ public class Enemy : MovingObject
 
     protected override void AttemptMove <T> (int xDir, int yDir)
     {
-        if (skipMove)
+        /*if (skipMove)
         {
             skipMove = false;
             return;
-        }
+        }*/
 
         base.AttemptMove<T>(xDir, yDir);
 
-        skipMove = true;
+        //skipMove = true;
     }
 
     public void MoveEnemy()
@@ -70,7 +71,7 @@ public class Enemy : MovingObject
     {
         Player hitPlayer = component as Player;
 
-        hitPlayer.LoseCoins(playerDamage);
+        hitPlayer.LoseHp(playerDamage);
 
         animator.SetTrigger("enemyAttack");
     }
