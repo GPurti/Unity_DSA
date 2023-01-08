@@ -30,14 +30,9 @@ public class Player : MovingObject
 		animator = GetComponent<Animator>();
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
-		Invoke("SetCoins", 1);
+		coins = 0;
 
 		base.Start();
-	}
-	
-	private void SetCoins()
-    {
-		coins = roomGameManager.playerCoinPoints;
 	}
 
 
@@ -125,6 +120,17 @@ public class Player : MovingObject
 		{
 			//Add pointsPerFood to the players current food total.
 			coins += pointsPerCoin;
+			currentHealth += pointsPerCoin;
+			if (currentHealth <= 100)
+			{
+				currentHealth += pointsPerCoin;
+				healthBar.SetHealth(currentHealth);
+			}
+			else
+			{ 
+				currentHealth = 100;
+				healthBar.SetHealth(100);
+			}
 
 			//Update foodText to represent current total and notify player that they gained points
 			//coinText.text = "+" + pointsPerCoin + " Coins: " + coins;
@@ -153,6 +159,11 @@ public class Player : MovingObject
 		roomGameManager.playersTurn = false;
 	}
 
+	public void MovePhone(Vector3 moveDirection)
+	{
+		AttemptMove<Door>((int)moveDirection.x, (int)moveDirection.y);
+		AttemptMove<Enemy>((int)moveDirection.x, (int)moveDirection.y);
+	}
 
 	//OnCantMove overrides the abstract function OnCantMove in MovingObject.
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.

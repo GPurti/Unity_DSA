@@ -10,7 +10,7 @@ public class RoomGameManager : MonoBehaviour
 
     public float levelStartDelay = 2f;                        //Time to wait before starting level, in seconds.
     public float turnDelay = 0.1f;                            //Delay between each Player turn.
-    public int playerCoinPoints = 100;                        //Starting value for Player coin points.
+    public int playerCoinPoints = 0;                        //Starting value for Player coin points.
     public int playerHealthPoints = 100;
     public List<string> elementsAvailable = new List<string>();
     [HideInInspector] public bool initiated = false;
