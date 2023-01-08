@@ -211,8 +211,22 @@ public class Player : MovingObject
 		if (currentHealth <= 0)
 		{
 			animator.SetTrigger("playerDie");
+
+#if UNITY_ANDROID
+	saveGameInfoInAndroid();
+#endif
+
 			//Call the GameOver function of GameManager.
 			roomGameManager.GameOver();
 		}
 	}
+
+	private void saveGameInfoInAndroid()
+    {
+		AndroidJavaObject unityActivity = new AndroidJavaObject("com.unity3d.player.Backend");
+
+		object[] parameters = new object[1];
+		parameters[0] = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().SaveRooms();
+		unityActivity.Call("saveGameInfo", parameters);
+    }
 }
