@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1ab8f9c600338004c92f574b26a2d6c4
+guid: 20df122046d6e924cb4e432db3a8da4b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TX Tileset Grass_0
+      name: Earth_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 212
-        width: 41
-        height: 41
+        x: 17
+        y: 167
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,41 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df03bfe84f6e3724aa71c012860e74b4
-      internalID: 469778799
+      spriteID: 9f9426cdf1b1e714cb68c51e058edec6
+      internalID: -32208986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_1
+      name: Earth_1
       rect:
         serializedVersion: 2
-        x: 196
-        y: 207
-        width: 41
-        height: 41
-      alignment: 9
-      pivot: {x: 0.44060236, y: 0.08421475}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4a5bf53e8591b94ebcfef3167d56fe5
-      internalID: 1348204855
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TX Tileset Grass_2
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 174
-        width: 41
-        height: 41
+        x: 190
+        y: 169
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 372da1df469cd8f4d80b44ca77077a0d
-      internalID: 484970149
+      spriteID: 48044c5f777009e4095fc6923c58becc
+      internalID: -92396856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_3
+      name: Earth_2
       rect:
         serializedVersion: 2
-        x: 150
-        y: 120
-        width: 41
-        height: 41
+        x: 364
+        y: 168
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f84245c033d1d244db3ce209fb53cba8
-      internalID: -664239082
+      spriteID: 51bf5d37e878f554982619b7d9e5dba7
+      internalID: 167374415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_4
+      name: Earth_3
       rect:
         serializedVersion: 2
-        x: 76
-        y: 96
-        width: 41
-        height: 41
+        x: 535
+        y: 166
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd7f9ece18633ac4fbfcca568166ca39
-      internalID: 1487222886
+      spriteID: 6324f034268336345b9749250b5732ae
+      internalID: 1509193205
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_5
+      name: Earth_4
       rect:
         serializedVersion: 2
-        x: 125
-        y: 34
-        width: 41
-        height: 41
+        x: 21
+        y: 10
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc853bccbb3b24b4aa2b4e406a8acbcd
-      internalID: 1645439568
+      spriteID: b565a7d157ed96f459adf0f780cc5ac2
+      internalID: 686165507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_6
+      name: Earth_5
       rect:
         serializedVersion: 2
-        x: 173
-        y: 34
-        width: 41
-        height: 41
+        x: 192
+        y: 10
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,29 +236,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73b7b934fd8c9b943bf0e868fd6b98f4
-      internalID: 1518890388
+      spriteID: ed8ec3735a96e9e47b5e4a9a550e3d33
+      internalID: 310124709
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Tileset Grass_7
+      name: Earth_6
       rect:
         serializedVersion: 2
-        x: 16
-        y: 150
-        width: 41
-        height: 41
-      alignment: 9
+        x: 363
+        y: 9
+        width: 160
+        height: 160
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a22389cc51b541941a423da815f17172
-      internalID: 175859891
+      spriteID: 938ebfea355fc89488d3f835e6c126e9
+      internalID: -1937144624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Earth_7
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 6
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eedfef2966f038f48a1cf8ca54770e56
+      internalID: 33537917
       vertices: []
       indices: 
       edges: []
@@ -295,14 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TX Tileset Grass_1: 1348204855
-      TX Tileset Grass_5: 1645439568
-      TX Tileset Grass_2: 484970149
-      TX Tileset Grass_6: 1518890388
-      TX Tileset Grass_7: 175859891
-      TX Tileset Grass_4: 1487222886
-      TX Tileset Grass_3: -664239082
-      TX Tileset Grass_0: 469778799
+      Earth_3: 1509193205
+      Earth_0: -32208986
+      Earth_6: -1937144624
+      Earth_1: -92396856
+      Earth_2: 167374415
+      Earth_5: 310124709
+      Earth_4: 686165507
+      Earth_7: 33537917
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

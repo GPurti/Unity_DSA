@@ -83,9 +83,9 @@ public class MiniMap : MonoBehaviour
 
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>().transform);
         transform.localScale = new Vector3(400, 400, 0);
-        gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
-        gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-250, 250, -5);
+        gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(1, 1);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-250, -250, -5);
     }
 
     private void DrawRoom(Vector3 roomPosition)
