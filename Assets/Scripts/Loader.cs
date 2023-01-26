@@ -25,6 +25,5 @@ public class Loader : MonoBehaviour
 
         this.info = unityActivity.Call<string>("loadGame");
         Debug.Log(info);
-
     }
 }

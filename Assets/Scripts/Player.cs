@@ -23,6 +23,11 @@ public class Player : MovingObject
 
 	[HideInInspector] public RoomGameManager roomGameManager;
 
+	public AudioClip coinSound;
+	public AudioClip changeRoomSound;
+	public AudioClip gameOverSound;
+	public AudioClip victorySound;
+
 	//Start overrides the Start function of MovingObject
 	protected override void Start()
 	{
@@ -121,6 +126,9 @@ public class Player : MovingObject
 			//Add pointsPerFood to the players current food total.
 			coins += pointsPerCoin;
 			currentHealth += pointsPerCoin;
+
+			SoundManager.instance.PlaySingle(coinSound);
+
 			if (currentHealth <= 100)
 			{
 				currentHealth += pointsPerCoin;
