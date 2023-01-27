@@ -12,17 +12,16 @@ public class Bullet : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		
+		
 
-		rb.velocity = transform.right * speed;
+		//rb.velocity = transform.right * speed;
 
-		/*// Check if the left arrow key was released during the current frame
-		if (Input.GetKeyUp(KeyCode.LeftArrow))
-		{
-			rb.velocity = transform.left * speed;
-		}*/
+
 
 	}
-	
+
+
 	void OnTriggerEnter2D(Collider2D hitInfo)
 	{
 		/*
