@@ -70,7 +70,7 @@ public class Loader : MonoBehaviour
             else if (element == "earth")
             {
                 elementsAvailable.Add("earth");
-                SelectGadget earth = GameObject.FindGameObjectWithTag("Fire").GetComponent<SelectGadget>();
+                SelectGadget earth = GameObject.FindGameObjectWithTag("Earth").GetComponent<SelectGadget>();
                 earth.destroyMissing();
             }
             else if (element == "cloud")
