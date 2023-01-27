@@ -27,7 +27,6 @@ public class MiniMap : MonoBehaviour
         Invoke("DrawMiniMap", 4);
     }
 
-
     private void DrawMiniMap()
     {
         rooms = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().instantiatedRooms;

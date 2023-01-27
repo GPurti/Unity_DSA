@@ -27,10 +27,12 @@ public class Player : MovingObject
 	public AudioClip changeRoomSound;
 	public AudioClip gameOverSound;
 	public AudioClip victorySound;
+	public AudioClip swordSound;
 
 	//Start overrides the Start function of MovingObject
 	protected override void Start()
 	{
+		//Player player = GameObject.FindGameObjectWithTag("")
 		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
 		animator = GetComponent<Animator>();
 		currentHealth = maxHealth;
@@ -39,8 +41,6 @@ public class Player : MovingObject
 
 		base.Start();
 	}
-
-
 
 	//This function is called when the behaviour becomes disabled or inactive.
 	private void OnDisable()
@@ -186,6 +186,8 @@ public class Player : MovingObject
 		if (component.tag == "Enemy")
 		{
 			Enemy enemyToAttack = component as Enemy;
+			
+			SoundManager.instance.PlaySingle(swordSound);
 			enemyToAttack.damagedByPlayer();
 		}
 		animator.SetTrigger("playerAct");
@@ -236,5 +238,7 @@ public class Player : MovingObject
 		object[] parameters = new object[1];
 		parameters[0] = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().SaveRooms();
 		unityActivity.Call("saveGameInfo", parameters);
+
+		//mes passar les coins per afegir experiencia
     }
 }

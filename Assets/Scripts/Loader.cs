@@ -17,6 +17,15 @@ public class Loader : MonoBehaviour
 
         Instantiate(centralRoom);
         Instantiate(miniMap);
+        
+        //Change color of the player
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        SpriteRenderer m_Sprite = player.GetComponent<SpriteRenderer>();
+        m_Sprite.color = Color.blue;
+        
+        //Select a gadget
+
+
     }
 
     private void ReloadGame()
@@ -26,4 +35,10 @@ public class Loader : MonoBehaviour
         this.info = unityActivity.Call<string>("loadGame");
         Debug.Log(info);
     }
+
+    //public void ChangeSpriteColor()
+    //{
+      //  GameObject player = (GameObject)FindObjectOfType(typeof(GameObject));
+        //player.sprit
+    //}
 }
