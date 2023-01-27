@@ -10,14 +10,15 @@ public class Player : MovingObject
 	
 	public int pointsPerCoin = 5;
 	
-	//public Text coinText;
-	
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	private int coins;
 	public int maxHealth = 100;
 	public int currentHealth;
 
+	public List<string> elementsAvailable = new List<string>();
 	private HealthBar healthBar;
+
+	private Shooting shooting;
 
 	[HideInInspector] public bool canOpenDoor = false;
 
@@ -108,24 +109,14 @@ public class Player : MovingObject
 			enabled = false;
 		}
 
-		//NOT BEING USED YET
-		//Check if the tag of the trigger collided with is Food.
-		else if (other.tag == "ElementFire")
-		{
-
-			roomGameManager.elementsAvailable.Add("Fire");
-
-			//Disable the food object the player collided with.
-			other.gameObject.SetActive(false);
-
-			//s'haurien de desactivar els altres
-		}
-
 		else if (other.tag == "Coin")
 		{
 			//Add pointsPerFood to the players current food total.
 			coins += pointsPerCoin;
 			currentHealth += pointsPerCoin;
+
+			shooting = GetComponent<Shooting>();
+			shooting.IncreaseAmo();
 
 			SoundManager.instance.PlaySingle(coinSound);
 
@@ -241,4 +232,10 @@ public class Player : MovingObject
 
 		//mes passar les coins per afegir experiencia
     }
+
+	public void changePlayerColor(Color color)
+	{
+		SpriteRenderer m_Sprite = this.GetComponent<SpriteRenderer>();
+		m_Sprite.color = color;
+	}
 }

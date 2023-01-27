@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Bullet : MonoBehaviour
 {
 	public float speed = 10f;
@@ -9,33 +10,9 @@ public class Bullet : MonoBehaviour
 	public Rigidbody2D rb;
 	public GameObject impactEffect;
 
-	// Use this for initialization
+
 	void Start()
 	{
-		
-		
-
-		//rb.velocity = transform.right * speed;
-
-
-
+		UnityEngine.Object.Destroy(gameObject, 4f);
 	}
-
-
-	void OnTriggerEnter2D(Collider2D hitInfo)
-	{
-		/*
-		if (hitInfo.tag =="Enemy")
-		{
-			Instantiate(impactEffect, transform.position, transform.rotation);
-			hitInfo.GetComponent<Enemy>().damagedByPlayer();
-			Destroy(gameObject);
-		}
-		if (hitInfo.tag == "Wall")
-		{
-			Instantiate(impactEffect, transform.position, transform.rotation);
-			Destroy(gameObject);
-		}*/
-	}
-
 }

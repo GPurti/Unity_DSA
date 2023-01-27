@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectGadget : MonoBehaviour
-{
-    // Start is called before the first frame update void Start()
-    
+{    
+    public GameObject missingObject;
 
-    void onMouseDown()
+    void Start()
     {
-        print("Has fet un clickkk");
+        
     }
 
+    public void destroyMissing()
+    {
+        Destroy(missingObject);
+    }
 }
