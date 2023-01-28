@@ -9,14 +9,14 @@ public class Enemy : MovingObject
     private Animator animator;
     private Transform target;
     private bool skipMove;
-    private int life;
+    public int life = 4;
 
     [HideInInspector] public RoomGameManager roomGameManager;
 
     // Start is called before the first frame update
     protected override void Start()
     {
-        life = 4;
+
         Invoke("SetGameManager", 1);
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;

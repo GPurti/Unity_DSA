@@ -61,7 +61,7 @@ public class RoomGameManager : MonoBehaviour
         
     }
 
-    //GameOver is called when the player reaches 0 food points
+   
     public void GameOver()
     {
         MiniMap miniMap = GameObject.FindGameObjectWithTag("MiniMap").GetComponent<MiniMap>();

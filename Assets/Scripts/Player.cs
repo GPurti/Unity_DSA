@@ -14,11 +14,13 @@ public class Player : MovingObject
 	private int coins;
 	public int maxHealth = 100;
 	public int currentHealth;
-
-	public List<string> elementsAvailable = new List<string>();
 	private HealthBar healthBar;
 
 	private Shooting shooting;
+
+	public static string playerId;
+	public static ArrayList elementsAvailable;
+
 
 	[HideInInspector] public bool canOpenDoor = false;
 
@@ -33,6 +35,7 @@ public class Player : MovingObject
 	//Start overrides the Start function of MovingObject
 	protected override void Start()
 	{
+		elementsAvailable = new ArrayList();
 		//Player player = GameObject.FindGameObjectWithTag("")
 		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
 		animator = GetComponent<Animator>();
@@ -40,6 +43,7 @@ public class Player : MovingObject
 		healthBar.SetMaxHealth(maxHealth);
 		coins = 0;
 
+		
 		base.Start();
 	}
 
@@ -222,20 +226,80 @@ public class Player : MovingObject
 		}
 	}
 
+	public void SetPlayerId(string userId)
+    {
+		playerId = userId;
+    }
+
+	public void SetElement(string element)
+	{
+		elementsAvailable.Add(element);
+		if (element == "Water")
+		{
+			SelectGadget water = GameObject.FindGameObjectWithTag("Water").GetComponent<SelectGadget>();
+			water.destroyMissing();
+			pointsPerCoin = 10;
+		}
+		else if (element == "Fire")
+		{
+			SelectGadget fire = GameObject.FindGameObjectWithTag("Fire").GetComponent<SelectGadget>();
+			fire.destroyMissing();
+		}
+		else if (element == "Earth")
+		{
+			SelectGadget earth = GameObject.FindGameObjectWithTag("Earth").GetComponent<SelectGadget>();
+			earth.destroyMissing();
+		}
+		else if (element == "Cloud")
+		{
+			SelectGadget cloud = GameObject.FindGameObjectWithTag("Cloud").GetComponent<SelectGadget>();
+			cloud.destroyMissing();
+		}
+	}
+
 	private void saveGameInfoInAndroid()
     {
-		AndroidJavaObject unityActivity = new AndroidJavaObject("com.unity3d.player.Backend");
+		AndroidJavaObject unityActivity = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.Backend");
 
-		object[] parameters = new object[1];
-		parameters[0] = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>().SaveRooms();
+		object[] parameters = new object[3];
+		parameters[0] = playerId;
+		parameters[1] = coins.ToString();
+		parameters[2] = "false";
 		unityActivity.Call("saveGameInfo", parameters);
-
-		//mes passar les coins per afegir experiencia
     }
 
 	public void changePlayerColor(Color color)
 	{
 		SpriteRenderer m_Sprite = this.GetComponent<SpriteRenderer>();
 		m_Sprite.color = color;
+	}
+
+	private void ReloadGame()
+	{
+		foreach (string element in elementsAvailable)
+		{
+
+			if (element == "Water")
+			{
+				SelectGadget water = GameObject.FindGameObjectWithTag("Water").GetComponent<SelectGadget>();
+				water.destroyMissing();
+			}
+			else if (element == "Fire")
+			{
+				SelectGadget fire = GameObject.FindGameObjectWithTag("Fire").GetComponent<SelectGadget>();
+				fire.destroyMissing();
+			}
+			else if (element == "Earth")
+			{
+				SelectGadget earth = GameObject.FindGameObjectWithTag("Earth").GetComponent<SelectGadget>();
+				earth.destroyMissing();
+				healthBar.SetMaxHealth(130);
+			}
+			else if (element == "Cloud")
+			{
+				SelectGadget cloud = GameObject.FindGameObjectWithTag("Cloud").GetComponent<SelectGadget>();
+				cloud.destroyMissing();
+			}
+		}
 	}
 }
