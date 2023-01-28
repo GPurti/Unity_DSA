@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MiniMap : MonoBehaviour
 {
@@ -129,7 +130,12 @@ public class MiniMap : MonoBehaviour
 
     public void GameOver()
     {
-        for (int i = 0; i < rooms.Count; i++)
+        if (completedRooms.Count == rooms.Count)
+        {
+            //saveGameInfoInAndroid();
+            SceneManager.LoadScene("GameOverScene");
+        }
+        /*for (int i = 0; i < rooms.Count; i++)
         {
             if (rooms[i].tag == "CentralRoom")
             {
@@ -141,6 +147,6 @@ public class MiniMap : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
     }
 }

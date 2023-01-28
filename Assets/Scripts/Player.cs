@@ -222,7 +222,8 @@ public class Player : MovingObject
 #endif
 
 			//Call the GameOver function of GameManager.
-			roomGameManager.GameOver();
+			//roomGameManager.GameOver();
+			SceneManager.LoadScene("DefeatGameScene");
 		}
 	}
 
