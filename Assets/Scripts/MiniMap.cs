@@ -130,23 +130,41 @@ public class MiniMap : MonoBehaviour
 
     public void GameOver()
     {
-        if (completedRooms.Count == rooms.Count)
+        List<GameObject> completedActiveRooms = new List<GameObject>();
+        for(int i = 0; i<completedRooms.Count; i++)
         {
-            //saveGameInfoInAndroid();
-            SceneManager.LoadScene("GameOverScene");
-        }
-        /*for (int i = 0; i < rooms.Count; i++)
-        {
-            if (rooms[i].tag == "CentralRoom")
+            if (completedRooms[i].active)
             {
-                foreach (Transform child in rooms[i].transform)
-                {
-                    if (child.name == "GameOver")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-                }
+               completedActiveRooms.Add(completedRooms[i]);
             }
-        }*/
+        }
+        if (completedActiveRooms.Count == rooms.Count-1)
+        {
+
+            SceneManager.LoadScene("GameOverScene");
+
+#if UNITY_ANDROID
+	saveGameInfoInAndroid();
+#endif
+        }
+    }
+
+    private void saveGameInfoInAndroid()
+    {
+        AndroidJavaObject unityActivity = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.Backend");
+
+        object[] parameters = new object[3];
+        parameters[0] = Player.playerId;
+        parameters[1] = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().coins.ToString();
+        parameters[2] = "true";
+        unityActivity.Call("saveGameInfo", parameters);
+
+        Invoke("closeGame", 5f);
+    }
+
+    private void closeGame()
+    {
+        AndroidJavaObject andClass = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.activities.GameActivity");
+        andClass.Call("finishActivity");
     }
 }

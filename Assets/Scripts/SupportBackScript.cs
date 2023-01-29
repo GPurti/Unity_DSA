@@ -39,7 +39,8 @@ public class SupportBackScript : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.Escape))
             {
-                Application.Quit();
+                AndroidJavaObject andClass = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.activities.GameActivity");
+                andClass.Call("finishActivity");
             }
         }
     }

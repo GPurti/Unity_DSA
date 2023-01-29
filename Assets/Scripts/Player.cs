@@ -11,7 +11,7 @@ public class Player : MovingObject
 	public int pointsPerCoin = 5;
 	
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
-	private int coins;
+	public int coins;
 	public int maxHealth = 100;
 	public int currentHealth;
 	private HealthBar healthBar;
@@ -267,7 +267,17 @@ public class Player : MovingObject
 		parameters[1] = coins.ToString();
 		parameters[2] = "false";
 		unityActivity.Call("saveGameInfo", parameters);
-    }
+
+		Invoke("closeGame", 5);
+	}
+
+	private void closeGame()
+	{
+		AndroidJavaObject andClass = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.activities.GameActivity");
+		andClass.Call("finishActivity");
+
+	}
+
 
 	public void changePlayerColor(Color color)
 	{
