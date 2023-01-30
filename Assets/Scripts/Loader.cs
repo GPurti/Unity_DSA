@@ -13,15 +13,10 @@ public class Loader : MonoBehaviour
     {
         elementsAvailable = new ArrayList();
         
-
-        
         Instantiate(centralRoom);
         Instantiate(miniMap);
 
         //Change color of the player
         Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        player.changePlayerColor(Color.red);
-
-
     }
 }

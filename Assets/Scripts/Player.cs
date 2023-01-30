@@ -8,13 +8,13 @@ public class Player : MovingObject
 {
 	public float restartLevelDelay = 1f;        //Delay time in seconds to restart level.
 	
-	public int pointsPerCoin = 5;
+	public int pointsPerCoin = 10;
 	
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	public int coins;
 	public int maxHealth = 100;
 	public int currentHealth;
-	private HealthBar healthBar;
+	public HealthBar healthBar;
 
 	private Shooting shooting;
 
@@ -26,6 +26,9 @@ public class Player : MovingObject
 
 	[HideInInspector] public RoomGameManager roomGameManager;
 
+	public bool varf;
+	public bool varc;
+
 	public AudioClip coinSound;
 	public AudioClip changeRoomSound;
 	public AudioClip gameOverSound;
@@ -36,16 +39,23 @@ public class Player : MovingObject
 	protected override void Start()
 	{
 		elementsAvailable = new ArrayList();
-		//Player player = GameObject.FindGameObjectWithTag("")
 		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
 		animator = GetComponent<Animator>();
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
 		coins = 0;
-
+		SetSpeed();
 		
 		base.Start();
 	}
+
+	private void SetSpeed()
+    {
+		if (varc)
+		{
+			
+		}
+    }
 
 	//This function is called when the behaviour becomes disabled or inactive.
 	private void OnDisable()
@@ -62,7 +72,6 @@ public class Player : MovingObject
 
 		int horizontal = 0;      //Used to store the horizontal move direction.
 		int vertical = 0;        //Used to store the vertical move direction.
-
 
 		//Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
 		horizontal = (int)(Input.GetAxisRaw("Horizontal"));
@@ -88,15 +97,12 @@ public class Player : MovingObject
 		if (Input.GetAxis("Horizontal") < 0)
         {
 			characterScale.x = -3.5f;
-
         }
 		if (Input.GetAxis("Horizontal") > 0)
 		{
 			characterScale.x = 3.5f;
-
 		}
 		transform.localScale = characterScale;
-
 	}
 
 	//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
@@ -147,13 +153,19 @@ public class Player : MovingObject
 	//AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
 	protected override void AttemptMove<T>(int xDir, int yDir)
 	{
-		
+		if(varc)
+        {
+			xDir*=2;
+			yDir*=2;
+        }
+
 		//Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
 		base.AttemptMove<T>(xDir, yDir);
 
 		//Hit allows us to reference the result of the Linecast done in Move.
 		RaycastHit2D hit;
 
+		
 		if(Move(xDir, yDir, out hit))
         {
 
@@ -234,27 +246,36 @@ public class Player : MovingObject
 
 	public void SetElement(string element)
 	{
+		varf = false;
+		varc = false;
 		elementsAvailable.Add(element);
 		if (element == "Water")
 		{
 			SelectGadget water = GameObject.FindGameObjectWithTag("Water").GetComponent<SelectGadget>();
 			water.destroyMissing();
 			pointsPerCoin = 10;
+			changePlayerColor(Color.blue);
 		}
 		else if (element == "Fire")
 		{
 			SelectGadget fire = GameObject.FindGameObjectWithTag("Fire").GetComponent<SelectGadget>();
 			fire.destroyMissing();
+			varf = true;
+			changePlayerColor(Color.red);
 		}
 		else if (element == "Earth")
 		{
 			SelectGadget earth = GameObject.FindGameObjectWithTag("Earth").GetComponent<SelectGadget>();
 			earth.destroyMissing();
+			healthBar.SetMaxHealth(130);
+			changePlayerColor(Color.green);
 		}
 		else if (element == "Cloud")
 		{
 			SelectGadget cloud = GameObject.FindGameObjectWithTag("Cloud").GetComponent<SelectGadget>();
 			cloud.destroyMissing();
+			varc = true;
+			changePlayerColor(Color.grey);
 		}
 	}
 
@@ -275,9 +296,7 @@ public class Player : MovingObject
 	{
 		AndroidJavaObject andClass = new AndroidJavaObject("edu.upc.dsa.andoroid_dsa.activities.GameActivity");
 		andClass.Call("finishActivity");
-
 	}
-
 
 	public void changePlayerColor(Color color)
 	{
@@ -287,30 +306,42 @@ public class Player : MovingObject
 
 	private void ReloadGame()
 	{
+		varf = false;
+		varc = false;
 		foreach (string element in elementsAvailable)
 		{
-
 			if (element == "Water")
 			{
 				SelectGadget water = GameObject.FindGameObjectWithTag("Water").GetComponent<SelectGadget>();
 				water.destroyMissing();
+				changePlayerColor(Color.blue);
 			}
 			else if (element == "Fire")
 			{
 				SelectGadget fire = GameObject.FindGameObjectWithTag("Fire").GetComponent<SelectGadget>();
 				fire.destroyMissing();
+				varf=true;
+				changePlayerColor(Color.red);
 			}
 			else if (element == "Earth")
 			{
 				SelectGadget earth = GameObject.FindGameObjectWithTag("Earth").GetComponent<SelectGadget>();
 				earth.destroyMissing();
 				healthBar.SetMaxHealth(130);
+				changePlayerColor(Color.green);
 			}
 			else if (element == "Cloud")
 			{
 				SelectGadget cloud = GameObject.FindGameObjectWithTag("Cloud").GetComponent<SelectGadget>();
 				cloud.destroyMissing();
+				varc = true;
+				changePlayerColor(Color.grey);
 			}
 		}
 	}
+
+	public bool GetFire()
+    {
+		return varf;
+    }
 }

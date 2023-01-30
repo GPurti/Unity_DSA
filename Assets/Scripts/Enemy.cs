@@ -9,18 +9,29 @@ public class Enemy : MovingObject
     private Animator animator;
     private Transform target;
     private bool skipMove;
-    public int life = 4;
+    public int life;
 
     [HideInInspector] public RoomGameManager roomGameManager;
 
     // Start is called before the first frame update
     protected override void Start()
     {
-
+        SetLife();
         Invoke("SetGameManager", 1);
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
+    }
+
+    private void SetLife()
+    {
+        this.life = 4;
+        Player p1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        if (p1.GetFire())
+        {
+            this.life = 2;
+        }
     }
 
     private void SetGameManager()
